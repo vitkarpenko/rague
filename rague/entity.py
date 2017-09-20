@@ -1,7 +1,6 @@
 """ This module provides Entity class.
 """
 import json
-from pathlib import Path
 
 from rague import (
     components,
@@ -28,8 +27,10 @@ class Entity:
         for component in template:
             try:
                 component_class = getattr(components, component)
-                component_instance = component_class.__init__(**template[component])
-                self.components.update(component_instance)
+                component_instance = component_class(**template[component])
+                self.components.add(component_instance)
             except AttributeError:
                 raise AttributeError("Entity {} uses component "
-                                     "{} which is not defined!".format(template_path, component))
+                                     "{} which is not defined!".format(template_path,
+                                                                       component))
+
