@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "8a13b6defbb3d8b36223d6afc2a3481ec72f9aad735d38b373ac41576a334f82"
+            "sha256": "9b8601b7790ef4fe9f93195d065b3bd1e1282c1f2d1753b6deeb0b6b71c41003"
         },
         "host-environment-markers": {
             "implementation_name": "cpython",
@@ -27,7 +27,18 @@
             }
         ]
     },
-    "default": {},
+    "default": {
+        "bearlibterminal": {
+            "hashes": [
+                "sha256:fb00d7a1f5f0bfebccb4aad07bd9e4effed9ff71251d0c4fdf714923a23ef5a5",
+                "sha256:beee986774c31b35b2332a3eb6dee2ea21efe96b0785f90de78d36b9e78e47f1",
+                "sha256:fc5de3b68866e0deef0d4a783a7570e8b680cc297baa309e93b19becc2115ce0",
+                "sha256:2c394c5eb46fc65ddc0b83454147fc33fbf7db671890af4f77d57dc46579ea91",
+                "sha256:88bb03778000c806fb3b013a4eb88d7c65a11746b7f13dc27c5640ea7cccc3d3"
+            ],
+            "version": "==0.15.4"
+        }
+    },
     "develop": {
         "py": {
             "hashes": [

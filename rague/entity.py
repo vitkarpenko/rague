@@ -15,11 +15,12 @@ class Entity:
         """ template: string containing path to
         JSON entity template (relative to data/entities folder)
         without and extension.
+        self.components: dict in form of {component name: component instance}
 
         Usage examples:
         Entity('enemies/crab')
         """
-        self.components = set()
+        self.components = dict()
 
         with (config.DATA / 'entities' / (template_path + '.json')).open() as template_json:
             template = json.load(template_json)
@@ -28,7 +29,7 @@ class Entity:
             try:
                 component_class = getattr(components, component)
                 component_instance = component_class(**template[component])
-                self.components.add(component_instance)
+                self.components[component] = component_instance
             except AttributeError:
                 raise AttributeError("Entity {} uses component "
                                      "{} which is not defined!".format(template_path,

@@ -6,5 +6,8 @@ url = "https://pypi.python.org/simple"
 python_version = "3.5"
 
 [dev-packages]
-pytest = '*'
+pytest = "*"
+
+[packages]
+bearlibterminal = "*"
 
