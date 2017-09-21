@@ -60,10 +60,10 @@ class PlayerControl(System):
         return {'Player'}
 
     def evaluate(self):
-        while True:
-            blt.clear()
-            if blt.has_input():
-                key = blt.read()
-                blt.refresh()
-                print(key)
-                blt.delay(500)
+        blt.clear()
+        if blt.has_input():
+            key = blt.read()
+            if key == blt.TK_ESCAPE:
+                exit(0)
+            blt.refresh()
+            print(key)

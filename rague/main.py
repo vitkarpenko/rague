@@ -7,5 +7,5 @@ from rague.config import blt
 
 world = World()
 while True:
-    pass
+    world.make_iteration()
 
