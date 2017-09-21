@@ -1,9 +1,8 @@
 """ This module contains main loop.
 """
 
-from bearlibterminal import terminal as blt
-
 from rague.world import World
+from rague.config import blt
 
 
 world = World()

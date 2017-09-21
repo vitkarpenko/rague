@@ -3,6 +3,8 @@ which actually changes state of the world.
 """
 from abc import ABC, abstractmethod
 
+from rague.config import blt
+
 
 class System(ABC):
     """ System iterates through entities every
@@ -25,7 +27,7 @@ class System(ABC):
 
 
 class Movement(System):
-    """ Movement system which controls changing entitie's coordinates.
+    """ Controls changing entitie's coordinates.
     """
     def __init__(self, world):
         super().__init__(world)
@@ -45,3 +47,23 @@ class Movement(System):
             if all(requested in entity.components
                    for requested in self.requested_components):
                 self.move(entity)
+
+
+class PlayerControl(System):
+    """ Controls player character.
+    """
+    def __init__(self, world):
+        super().__init__(world)
+
+    @property
+    def requested_components(self):
+        return {'Player'}
+
+    def evaluate(self):
+        while True:
+            blt.clear()
+            if blt.has_input():
+                key = blt.read()
+                blt.refresh()
+                print(key)
+                blt.delay(500)

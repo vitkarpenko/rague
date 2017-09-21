@@ -23,3 +23,11 @@ class Velocity(Component):
     def __init__(self, x, y):
         self.x = x
         self.y = y
+
+
+class Player(Component):
+    """ Indicates that entity is directly
+    controlled by player.
+    """
+    def __init__(self):
+        pass
