@@ -11,8 +11,13 @@ print(Path('../rague').resolve())
 import pytest
 
 from rague.entity import Entity
+from rague.world import World
 
 
 @pytest.fixture
 def dummy_entity():
     return Entity('tests/dummy')
+
+@pytest.fixture
+def world():
+    return World()

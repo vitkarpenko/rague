@@ -3,11 +3,6 @@ which actually changes state of the world.
 """
 from abc import ABC, abstractmethod
 
-from rague.components import (
-    Position,
-    Velocity
-)
-
 
 class System(ABC):
     """ System iterates through entities every
@@ -17,7 +12,7 @@ class System(ABC):
         self.world = world
 
     @abstractmethod
-    def compute(self):
+    def evaluate(self):
         """ Makes one turn of evaluation on a
         set of world entities. """
 
@@ -42,11 +37,11 @@ class Movement(System):
     def move(self, entity):
         """ Actually changes entity coordinates.
         """
-        for coordinate in ('x', 'y'):
-            entity.components['Position'][coordinate] += entity.components['Velocity'][coordinate]
+        entity.components['Position'].x += entity.components['Velocity'].x
+        entity.components['Position'].y += entity.components['Velocity'].y
 
-    def compute(self):
-        for entity in self.world:
+    def evaluate(self):
+        for entity in self.world.entities:
             if all(requested in entity.components
                    for requested in self.requested_components):
                 self.move(entity)
