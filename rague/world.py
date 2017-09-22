@@ -1,5 +1,6 @@
 """ This module provides World class
 used to control entities and systems.
+World also used by systems as a communicator.
 """
 from rague.systems import System
 

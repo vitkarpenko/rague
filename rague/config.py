@@ -9,6 +9,7 @@ blt.open()
 blt.set("window: size=80x25, cellsize=auto, title='Rague'; font: default")
 blt.set("input.filter={keyboard+}")
 blt.composition(True)
+blt.refresh()
 
 BASE_FOLDER = Path(__file__).parent
 DATA = BASE_FOLDER / 'data'
