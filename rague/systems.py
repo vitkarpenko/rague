@@ -50,7 +50,6 @@ class PlayerControl(System):
 
         if blt.has_input():
             key = blt.read()
-            print(key)
             if key in (blt.TK_CLOSE, blt.TK_ESCAPE):
                 exit(0)
             elif blt.state(blt.TK_UP):
@@ -61,8 +60,10 @@ class PlayerControl(System):
                 player.components['Velocity'].y -= 1
             elif blt.state(blt.TK_LEFT):
                 player.components['Velocity'].x -= 1
-            blt.read()
-
+            else:
+                # KeyError is handled in World
+                # to ignore incorrect keypresses.
+                raise KeyError
 
 
 class Movement(System):

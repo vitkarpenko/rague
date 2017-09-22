@@ -12,12 +12,6 @@ import pytest
 
 from rague.entity import Entity
 from rague.world import World
-from rague.config import blt
-
-
-def clear_input():
-    while blt.has_input():
-        blt.read()
 
 
 @pytest.fixture

@@ -15,5 +15,10 @@ class World:
 
     def make_iteration(self):
         for system in self.systems:
-            system.evaluate()
+            try:
+                system.evaluate()
+            except KeyError:
+                # Don't do anything on incorrect input.
+                # Such as F11 or releasing any key.
+                break
         
