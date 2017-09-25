@@ -2,12 +2,12 @@
 """
 
 from rague.world import World
-from rague.entity import Entity
+from rague.entities import *
 from rague.config import blt
 
 
 world = World()
-player = Entity('player/player')
+player = Player()
 world.entities.add(player)
 
 while True:

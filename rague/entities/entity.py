@@ -2,13 +2,7 @@
 used as a base for all other entities (through
 subclassing or instantiation.
 """
-from rague.components import (
-    Component,
-    Position,
-    Velocity,
-    Player
-)
-
+from rague.components import Component
 
 class EntityMeta(type):
     """ Every entity should declare a set of "components" instances
@@ -16,16 +10,17 @@ class EntityMeta(type):
     This metaclass turns this set into a dictionary
     for convenience.
     """
-    def __new__(cls, name, bases, attrs):
+    def __new__(mcs, name, bases, attrs):
         if 'components' not in attrs:
             raise AttributeError('Entity subclasses should declare a set of '
                                  'Components called "components".')
-        clsobj = super().__new__(cls, name, bases, attrs)
         components_dict = {
             component.__class__.__name__: component
             for component in attrs['components']
         }
         attrs['components'] = components_dict
+        clsobj = super().__new__(mcs, name, bases, attrs)
+        print(vars(clsobj))
         return clsobj
 
 

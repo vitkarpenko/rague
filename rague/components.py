@@ -12,7 +12,7 @@ class Component:
 class Position(Component):
     """ Represents place in the world.
     """
-    def __init__(self, x, y):
+    def __init__(self, x=0, y=0):
         self.x = x
         self.y = y
 
@@ -20,12 +20,12 @@ class Position(Component):
 class Velocity(Component):
     """ Represents current vector speed.
     """
-    def __init__(self, x, y):
+    def __init__(self, x=0, y=0):
         self.x = x
         self.y = y
 
 
-class Player(Component):
+class PlayerControlled(Component):
     """ Indicates that entity is directly
     controlled by player.
     """
