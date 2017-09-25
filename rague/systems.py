@@ -29,7 +29,7 @@ class System(ABC):
         return {
             entity
             for entity in self.world.entities
-            if all(requested in entity.components
+            if all(requested in entity.__dict__
                    for requested in self.requested_components)
         }
 
@@ -42,7 +42,7 @@ class PlayerControl(System):
 
     @property
     def requested_components(self):
-        return {'Player'}
+        return {'player_controlled'}
 
     def evaluate(self):
         # Player is always single.
@@ -53,13 +53,13 @@ class PlayerControl(System):
             if key in (blt.TK_CLOSE, blt.TK_ESCAPE):
                 exit(0)
             elif blt.state(blt.TK_UP):
-                player.components['Velocity'].y += 1
+                player.velocity.y += 1
             elif blt.state(blt.TK_RIGHT):
-                player.components['Velocity'].x += 1
+                player.velocity.x += 1
             elif blt.state(blt.TK_DOWN):
-                player.components['Velocity'].y -= 1
+                player.velocity.y -= 1
             elif blt.state(blt.TK_LEFT):
-                player.components['Velocity'].x -= 1
+                player.velocity.x -= 1
             else:
                 # KeyError is handled in World
                 # to ignore incorrect keypresses.
@@ -74,16 +74,16 @@ class Movement(System):
 
     @property
     def requested_components(self):
-        return {'Position', 'Velocity'}
+        return {'position', 'velocity'}
 
     def move(self, entity):
         """ Actually changes entity coordinates.
         """
-        entity.components['Position'].x += entity.components['Velocity'].x
-        entity.components['Position'].y += entity.components['Velocity'].y
+        entity.position.x += entity.velocity.x
+        entity.position.y += entity.velocity.y
 
     def evaluate(self):
         for entity in self.affected_entities:
             self.move(entity)
-            entity.components['Velocity'].x = 0
-            entity.components['Velocity'].y = 0
+            entity.velocity.x = 0
+            entity.velocity.y = 0

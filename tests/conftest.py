@@ -10,18 +10,19 @@ print(Path('../rague').resolve())
 
 import pytest
 
-from rague.entity import Entity
+from rague.entities import *
+from rague.components import *
 from rague.world import World
 
 
 @pytest.fixture
 def dummy_entity():
-    return Entity('tests/dummy')
+    return Dummy()
 
 
 @pytest.fixture
 def player():
-    return Entity('player/player')
+    return Player()
 
 
 @pytest.fixture
