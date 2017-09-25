@@ -7,8 +7,8 @@ def test_movement_system_on_dummy_entity_one_turn(world, dummy_entity):
     world.entities.add(dummy_entity)
     world.make_iteration()
     assert (
-        dummy_entity.components['Position'].x
-        == dummy_entity.components['Position'].y
+        dummy_entity.position.x
+        == dummy_entity.position.y
         == 1
     )
 
@@ -16,12 +16,12 @@ def test_movement_system_on_dummy_entity_one_turn(world, dummy_entity):
 
 def test_movement_system_on_paralyzed_dummy(world, dummy_entity):
     world.entities.add(dummy_entity)
-    del dummy_entity.components['Velocity']
+    del dummy_entity.velocity
     while blt.has_input():
         world.make_iteration()
     assert (
-        dummy_entity.components['Position'].x
-        == dummy_entity.components['Position'].y
+        dummy_entity.position.x
+        == dummy_entity.position.y
         == 0
     )
 
@@ -31,8 +31,8 @@ def test_player_up_movement(world, player):
     while blt.has_input():
         world.make_iteration()
     assert (
-        player.components['Position'].x == 0
-        and player.components['Position'].y == 1
+        player.position.x == 0
+        and player.position.y == 1
     )
 
 
@@ -41,8 +41,8 @@ def test_player_right_movement(world, player):
     while blt.has_input():
         world.make_iteration()
     assert (
-        player.components['Position'].x == 1
-        and player.components['Position'].y == 0
+        player.position.x == 1
+        and player.position.y == 0
     )
 
 
@@ -52,6 +52,6 @@ def test_player_circular_movement(world, player):
     while blt.has_input():
         world.make_iteration()
     assert (
-        player.components['Position'].x == 0
-        and player.components['Position'].y == 0
+        player.position.x == 0
+        and player.position.y == 0
     )

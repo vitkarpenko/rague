@@ -2,7 +2,10 @@
 used as a base for all other entities (through
 subclassing or instantiation.
 """
+from copy import deepcopy
+
 from rague.components import Component
+from rague.utils import to_snake_case
 
 class EntityMeta(type):
     """ Every entity should declare a set of "components" instances
@@ -20,7 +23,6 @@ class EntityMeta(type):
         }
         attrs['components'] = components_dict
         clsobj = super().__new__(mcs, name, bases, attrs)
-        print(vars(clsobj))
         return clsobj
 
 
@@ -33,8 +35,8 @@ class Entity(metaclass=EntityMeta):
             for component in args
             if isinstance(component, Component)
         }
-        merged_components = {**self.components, **init_components}
+        merged_components = {**deepcopy(self.components), **init_components}
         if not merged_components:
             return
         for key, val in merged_components.items():
-            setattr(self, key.lower(), val)
+            setattr(self, to_snake_case(key), val)

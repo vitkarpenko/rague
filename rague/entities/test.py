@@ -5,5 +5,5 @@ from rague.components import *
 class Dummy(Entity):
     components = {
         Position(),
-        Velocity(),
+        Velocity(1, 1),
     }
