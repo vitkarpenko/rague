@@ -69,12 +69,7 @@ class PlayerControl(System):
 
 
 class Movement(System):
-    """Controls changing entitie's coordinates.
-    On every iteration pushes message
-    'moved_coords' - list of 2-tuples which
-    represents map coordinates that has been freed
-    this turn - to world.messages.
-    """
+    """Controls changing entitie's coordinates."""
     def __init__(self, world):
         super().__init__(world)
 
@@ -85,18 +80,14 @@ class Movement(System):
     def move(self, entity):
         """Actually changes entity coordinates.
         """
-        if entity.velocity.x != 0 or entity.velocity.y != 0:
-            self.moved_coords.append((entity.position.x, entity.position.y))
-            entity.position.x += entity.velocity.x
-            entity.position.y += entity.velocity.y
+        entity.position.x += entity.velocity.x
+        entity.position.y += entity.velocity.y
 
     def evaluate(self):
-        self.moved_coords = []
         for entity in self.affected_entities:
             self.move(entity)
             entity.velocity.x = 0
             entity.velocity.y = 0
-        self.world.messages['moved_coords'] = self.moved_coords
 
 
 class Renderer(System):
@@ -115,11 +106,9 @@ class Renderer(System):
             blt.puts(x, y, '[color=gray]#[/color]')
 
     def evaluate(self):
+        blt.clear()
         for x, y in self.world.map_:
             self.draw_map(x, y)
         for entity in self.affected_entities:
             blt.puts(entity.position.x, entity.position.y, '[color=gray]{}[\color]'.format(entity.visible.symbol))
-        for x, y in self.world.messages.get('moved_coords', []):
-            blt.clear_area(x, y, 1, 1)
-            self.draw_map(x, y)
         blt.refresh()
