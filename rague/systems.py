@@ -69,7 +69,12 @@ class PlayerControl(System):
 
 
 class Movement(System):
-    """Controls changing entitie's coordinates."""
+    """Controls changing entitie's coordinates.
+    On every iteration pushes message
+    'moved_coords' - list of 2-tuples which
+    represents map coordinates that has been freed
+    this turn - to world.messages.
+    """
     def __init__(self, world):
         super().__init__(world)
 
@@ -80,14 +85,18 @@ class Movement(System):
     def move(self, entity):
         """Actually changes entity coordinates.
         """
-        entity.position.x += entity.velocity.x
-        entity.position.y += entity.velocity.y
+        if entity.velocity.x != 0 or entity.velocity.y != 0:
+            self.moved_coords.append((entity.position.x, entity.position.y))
+            entity.position.x += entity.velocity.x
+            entity.position.y += entity.velocity.y
 
     def evaluate(self):
+        self.moved_coords = []
         for entity in self.affected_entities:
             self.move(entity)
             entity.velocity.x = 0
             entity.velocity.y = 0
+        self.world.messages['moved_coords'] = self.moved_coords
 
 
 class Renderer(System):
@@ -99,17 +108,19 @@ class Renderer(System):
     def requested_components(self):
         return {'visible'}
 
+    def draw_map(self, x, y):
+        if self.world.map_[x, y] == 'f':
+            blt.puts(x, y, '[color=gray].[/color]')
+        else:
+            blt.puts(x, y, '[color=gray]#[/color]')
+
     def evaluate(self):
+        print(self.world.messages.get('moved_coords', []))
         for x, y in self.world.map_:
-            if self.world.map_[x, y] == 'f':
-                blt.puts(x, y, '[color=gray].[/color]')
-            else:
-                blt.puts(x, y, '[color=gray]#[/color]')
+            self.draw_map(x, y)
         for entity in self.affected_entities:
-            blt.clear_area(
-                entity.position.x - entity.velocity.x - 1,
-                entity.position.y - entity.velocity.y - 1,
-                1, 1
-            )
             blt.puts(entity.position.x, entity.position.y, '[color=gray]{}[\color]'.format(entity.visible.symbol))
+        for x, y in self.world.messages.get('moved_coords', []):
+            blt.clear_area(x, y, 1, 1)
+            self.draw_map(x, y)
         blt.refresh()

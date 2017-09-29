@@ -9,9 +9,11 @@ class World:
     """
     self.map_: instance of a Map class.
     self.entities: set of all entities in the world.
+    self.messages: dict used by systems to exchange messages.
     """
     def __init__(self, map_):
         self.entities = set()
+        self.messages = dict()
         # Instantiating all systems.
         self.systems = ({
             system.__name__: system(self)
