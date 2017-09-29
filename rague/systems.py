@@ -54,13 +54,13 @@ class PlayerControl(System):
         key = blt.read()
         if key in (blt.TK_CLOSE, blt.TK_ESCAPE):
             exit(0)
-        elif blt.state(blt.TK_UP):
+        elif blt.state(blt.TK_UP) or blt.state(blt.TK_K):
             player.velocity.y -= 1
-        elif blt.state(blt.TK_RIGHT):
+        elif blt.state(blt.TK_RIGHT) or blt.state(blt.TK_L):
             player.velocity.x += 1
-        elif blt.state(blt.TK_DOWN):
+        elif blt.state(blt.TK_DOWN) or blt.state(blt.TK_J):
             player.velocity.y += 1
-        elif blt.state(blt.TK_LEFT):
+        elif blt.state(blt.TK_LEFT) or blt.state(blt.TK_H):
             player.velocity.x -= 1
         else:
             # KeyError is handled in World
@@ -115,7 +115,6 @@ class Renderer(System):
             blt.puts(x, y, '[color=gray]#[/color]')
 
     def evaluate(self):
-        print(self.world.messages.get('moved_coords', []))
         for x, y in self.world.map_:
             self.draw_map(x, y)
         for entity in self.affected_entities:
