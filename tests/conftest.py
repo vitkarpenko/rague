@@ -11,6 +11,7 @@ print(Path('../rague').resolve())
 import pytest
 
 from rague.entities import *
+from rague.map import Map
 from rague.components import *
 from rague.world import World
 
@@ -26,8 +27,8 @@ def player():
 
 
 @pytest.fixture
-def world(player):
-    world = World()
-    world.entities.add(player)
+def world():
+    map_ = Map()
+    world = World(map_)
     return world
 

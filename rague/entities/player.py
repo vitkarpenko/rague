@@ -6,5 +6,6 @@ class Player(Entity):
     components = {
         Position(),
         Velocity(),
-        PlayerControlled()
+        PlayerControlled(),
+        Visible('@')
     }

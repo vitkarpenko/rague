@@ -1,4 +1,4 @@
-""" Main config file.
+"""Main config file.
 """
 from pathlib import Path
 

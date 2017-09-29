@@ -27,6 +27,7 @@ def test_movement_system_on_paralyzed_dummy(world, dummy_entity):
 
 
 def test_player_up_movement(world, player):
+    world.entities.add(player)
     pyautogui.typewrite(['up'])
     while blt.has_input():
         world.make_iteration()
@@ -37,6 +38,7 @@ def test_player_up_movement(world, player):
 
 
 def test_player_right_movement(world, player):
+    world.entities.add(player)
     pyautogui.typewrite(['right'])
     while blt.has_input():
         world.make_iteration()
@@ -47,6 +49,7 @@ def test_player_right_movement(world, player):
 
 
 def test_player_circular_movement(world, player):
+    world.entities.add(player)
     keys = ['up', 'right', 'down', 'left']
     pyautogui.typewrite(keys)
     while blt.has_input():
