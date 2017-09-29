@@ -33,7 +33,7 @@ def test_player_up_movement(world, player):
         world.make_iteration()
     assert (
         player.position.x == 0
-        and player.position.y == 1
+        and player.position.y == -1
     )
 
 
