@@ -8,6 +8,7 @@ from rague.map import Map
 from rague.world import World
 
 
+# Some preparation.
 player = Player(Position(4, 6))
 map_ = Map()
 world = World(map_)

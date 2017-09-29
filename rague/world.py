@@ -3,7 +3,6 @@ used to control entities and systems.
 World also used by systems as a communicator.
 """
 from rague.systems import System
-from collections import OrderedDict
 
 
 class World:
@@ -14,15 +13,22 @@ class World:
     def __init__(self, map_):
         self.entities = set()
         # Instantiating all systems.
-        self.systems = OrderedDict({system.__name__: system(self) for system in System.__subclasses__()})
+        self.systems = ({
+            system.__name__: system(self)
+            for system in System.__subclasses__()
+        })
+        self.systems_evaluation_order = [
+            'PlayerControl',
+            'Movement',
+            'Renderer'
+        ]
         self.map_ = map_
 
     def make_iteration(self):
-        for system in self.systems:
+        for system in self.systems_evaluation_order:
             try:
                 self.systems[system].evaluate()
             except KeyError:
                 # Don't do anything on incorrect input.
                 # Such as F11 or releasing any key.
-                break
-        
+                return

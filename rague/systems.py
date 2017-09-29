@@ -100,17 +100,16 @@ class Renderer(System):
         return {'visible'}
 
     def evaluate(self):
-        blt.clear()
         for x, y in self.world.map_:
             if self.world.map_[x, y] == 'f':
                 blt.puts(x, y, '[color=gray].[/color]')
             else:
                 blt.puts(x, y, '[color=gray]#[/color]')
         for entity in self.affected_entities:
-            """blt.clear_area(
-                entity.position.x - entity.velocity.x,
-                entity.position.y - entity.velocity.y,
+            blt.clear_area(
+                entity.position.x - entity.velocity.x - 1,
+                entity.position.y - entity.velocity.y - 1,
                 1, 1
-            )"""
+            )
             blt.puts(entity.position.x, entity.position.y, '[color=gray]{}[\color]'.format(entity.visible.symbol))
         blt.refresh()
