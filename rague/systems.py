@@ -97,18 +97,29 @@ class Renderer(System):
 
     @property
     def requested_components(self):
-        return {'visible'}
+        return {'visual'}
 
     def draw_map(self, x, y):
-        if self.world.map_[x, y] == 'f':
-            blt.puts(x, y, '[color=gray].[/color]')
-        else:
-            blt.puts(x, y, '[color=gray]#[/color]')
+        tile = self.world.map_[x, y]
+        blt.color(tile.color)
+        blt.puts(
+            x, y,
+            tile.symbol
+        )
+
+    def draw_entity(self, entity):
+        blt.color(entity.visual.color)
+        blt.clear_area(entity.position.x, entity.position.y, 1, 1)
+        blt.puts(
+            entity.position.x, 
+            entity.position.y,
+            entity.visual.symbol
+        )
 
     def evaluate(self):
         blt.clear()
         for x, y in self.world.map_:
             self.draw_map(x, y)
         for entity in self.affected_entities:
-            blt.puts(entity.position.x, entity.position.y, '[color=gray]{}[\color]'.format(entity.visible.symbol))
+            self.draw_entity(entity)
         blt.refresh()

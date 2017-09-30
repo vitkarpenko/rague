@@ -7,5 +7,5 @@ class Player(Entity):
         Position(),
         Velocity(),
         PlayerControlled(),
-        Visible('@')
+        Visual('@', color=0xFFB0E0E6)
     }

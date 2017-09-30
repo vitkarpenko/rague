@@ -1,6 +1,19 @@
 """This module provides Map class which represent
 a game world without entities.
 """
+from collections import namedtuple
+
+
+Tile = namedtuple(
+    'Tile',
+    ['symbol',
+     'color',
+     'passable']
+)
+
+
+FLOOR = Tile('.', 0x66C3B091, True)
+WALL = Tile('#', 0xBBFFFACD, False)
 
 
 class Map:
@@ -13,13 +26,13 @@ class Map:
 
     def __init__(self):
         self.tiles = {
-            (x, y): 'f'
+            (x, y): FLOOR
             for x in range(30)
             for y in range(30)
         }
 
         for y in range(15):
-            self[10, y] = 'w'
+            self[10, y] = WALL
 
     def __getitem__(self, position):
         x, y = position
@@ -34,4 +47,4 @@ class Map:
 
     def passable(self, position):
         x, y = position
-        return self[x, y] in ['f']
+        return self[x, y].passable
