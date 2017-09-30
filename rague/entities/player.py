@@ -7,5 +7,5 @@ class Player(Entity):
         Position(),
         Velocity(),
         PlayerControlled(),
-        Visual(0xE100+(4*16), color=0xFFB0E0E6)
+        Visual(0xE100+1, color=0xFFB0E0E6)
     }
