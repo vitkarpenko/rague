@@ -105,6 +105,7 @@ class Renderer(System):
 
     def draw_map(self, x, y):
         tile = self.world.map_[x, y]
+        x, y = self.world_to_local_coords(x, y)
         blt.color(tile.color)
         blt.puts(
             x, y,
@@ -114,16 +115,19 @@ class Renderer(System):
     def draw_entity(self, entity):
         blt.color(entity.visual.color)
         blt.clear_area(entity.position.x, entity.position.y, 1, 1)
+        x, y = self.world_to_local_coords(
+            entity.position.x,
+            entity.position.y
+        )
         blt.puts(
-            entity.position.x, 
-            entity.position.y,
+            x, y,
             entity.visual.symbol
         )
 
     def world_to_local_coords(self, x, y):
         return (
-            SCREEN_CENTER_COORDINATES[0] + (x - player.position.x),
-            SCREEN_CENTER_COORDINATES[1] + (y - player.position.y)
+            int(SCREEN_CENTER_COORDINATES[0] + (x - self.world.player.position.x)),
+            int(SCREEN_CENTER_COORDINATES[1] + (y - self.world.player.position.y))
         )
 
     def evaluate(self):

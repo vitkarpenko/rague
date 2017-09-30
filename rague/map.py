@@ -15,6 +15,7 @@ Tile = namedtuple(
 
 FLOOR = Tile('.', 0x66C3B091, True)
 WALL = Tile('#', 0xBBFFFACD, False)
+NOTHING = Tile(' ', 0x00000000, False)
 
 
 class Map:
@@ -34,7 +35,7 @@ class Map:
 
     def __getitem__(self, position):
         x, y = position
-        return self.tiles[(x, y)]
+        return self.tiles.get((x, y), NOTHING)
 
     def __setitem__(self, position, value):
         x, y = position
