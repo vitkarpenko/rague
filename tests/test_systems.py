@@ -58,3 +58,15 @@ def test_player_circular_movement(world, player):
         player.position.x == 5
         and player.position.y == 5
     )
+
+def test_player_not_passing_through_wall(world, player):
+    world.entities.add(player)
+    keys = ['right'] * 20
+    pyautogui.typewrite(keys)
+    while blt.has_input():
+        world.make_iteration()
+    assert (
+        player.position.x == 9
+        and player.position.y == 5
+    )
+

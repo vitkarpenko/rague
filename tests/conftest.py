@@ -28,7 +28,7 @@ def player():
 
 @pytest.fixture
 def world(player):
-    map_ = Map()
+    map_ = Map('data/maps/test.map')
     world = World(map_, player)
     return world
 
