@@ -13,7 +13,7 @@ Tile = namedtuple(
 )
 
 
-FLOOR = Tile('.', 0x66C3B091, True)
+FLOOR = Tile('█', 0x22C3B091, True)
 WALL = Tile('#', 0xBBFFFACD, False)
 NOTHING = Tile(' ', 0x00000000, False)
 

@@ -114,7 +114,6 @@ class Renderer(System):
 
     def draw_entity(self, entity):
         blt.color(entity.visual.color)
-        blt.clear_area(entity.position.x, entity.position.y, 1, 1)
         x, y = self.world_to_local_coords(
             entity.position.x,
             entity.position.y

@@ -7,13 +7,13 @@ from bearlibterminal import terminal as blt
 
 BASE_FOLDER = Path(__file__).parent
 DATA = BASE_FOLDER / 'data'
-SCREEN_WIDTH, SCREEN_HEIGHT = 100, 40
+SCREEN_WIDTH, SCREEN_HEIGHT = 80, 50
 SCREEN_CENTER_COORDINATES = (SCREEN_WIDTH / 2), (SCREEN_HEIGHT / 2)
 
 
 blt.open()
 blt.set("window: size={}x{}, "
-        "cellsize=auto, "
+        "cellsize=12x12, "
         "title='Rague'; "
         "font: default".format(SCREEN_WIDTH, SCREEN_HEIGHT))
 blt.set("input.filter={keyboard+}")
