@@ -107,7 +107,7 @@ class Renderer(System):
         tile = self.world.map_[x, y]
         x, y = self.world_to_local_coords(x, y)
         blt.color(tile.color)
-        blt.puts(
+        blt.put(
             x, y,
             tile.symbol
         )
@@ -118,7 +118,7 @@ class Renderer(System):
             entity.position.x,
             entity.position.y
         )
-        blt.puts(
+        blt.put(
             x, y,
             entity.visual.symbol
         )

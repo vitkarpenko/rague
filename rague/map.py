@@ -13,9 +13,9 @@ Tile = namedtuple(
 )
 
 
-FLOOR = Tile('█', 0x22C3B091, True)
-WALL = Tile('#', 0xBBFFFACD, False)
-NOTHING = Tile(' ', 0x00000000, False)
+FLOOR = Tile(0xE100+(11*16+2), 0x22C3B091, True)
+WALL = Tile(0xE100+(13*16+11), 0xBBFFFACD, False)
+NOTHING = Tile(0xE100, 0x00000000, False)
 
 
 class Map:
