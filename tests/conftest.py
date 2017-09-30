@@ -23,12 +23,12 @@ def dummy_entity():
 
 @pytest.fixture
 def player():
-    return Player()
+    return Player(Position(5, 5))
 
 
 @pytest.fixture
-def world():
+def world(player):
     map_ = Map()
-    world = World(map_)
+    world = World(map_, player)
     return world
 

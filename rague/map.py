@@ -2,6 +2,7 @@
 a game world without entities.
 """
 from collections import namedtuple
+from pathlib import Path
 
 
 Tile = namedtuple(
@@ -24,15 +25,12 @@ class Map:
     'w': wall; blocks movement and line of sight.
     """
 
-    def __init__(self):
-        self.tiles = {
-            (x, y): FLOOR
-            for x in range(30)
-            for y in range(30)
-        }
-
-        for y in range(15):
-            self[10, y] = WALL
+    def __init__(self, filepath=None):
+        self.tiles = dict()
+        if not filepath:
+            self.generate_map()
+        else:
+            self.load_from_file(filepath)
 
     def __getitem__(self, position):
         x, y = position
@@ -44,3 +42,23 @@ class Map:
 
     def __iter__(self):
         return iter(self.tiles)
+
+    def generate_map(self):
+        """Generates map randomly."""
+        pass
+
+    def load_from_file(self, filepath):
+        """Loads map from file."""
+        def set_tile(x, y, symbol):
+            if symbol == '.':
+                self[x, y] = FLOOR
+            elif symbol == '#':
+                self[x, y] = WALL
+            else:
+                raise ValueError('Incorrect value {} '
+                                 'in mapfile {}!'.format(symbol, filepath))
+        mapfile = Path(__file__).parent / filepath
+        with mapfile.open() as data:
+            for index_y, line in enumerate(data):
+                for index_x, symbol in enumerate(line[:-1]):
+                    set_tile(index_x, index_y, symbol)

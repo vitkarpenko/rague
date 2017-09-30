@@ -11,7 +11,7 @@ class World:
     self.entities: set of all entities in the world.
     self.messages: dict used by systems to exchange messages.
     """
-    def __init__(self, map_):
+    def __init__(self, map_, player):
         self.entities = set()
         self.messages = dict()
         # Instantiating all systems.
@@ -25,6 +25,7 @@ class World:
             'Renderer'
         ]
         self.map_ = map_
+        self.player = player
 
     def make_iteration(self):
         for system in self.systems_evaluation_order:

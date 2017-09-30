@@ -32,8 +32,8 @@ def test_player_up_movement(world, player):
     while blt.has_input():
         world.make_iteration()
     assert (
-        player.position.x == 0
-        and player.position.y == -1
+        player.position.x == 5
+        and player.position.y == 4
     )
 
 
@@ -43,8 +43,8 @@ def test_player_right_movement(world, player):
     while blt.has_input():
         world.make_iteration()
     assert (
-        player.position.x == 1
-        and player.position.y == 0
+        player.position.x == 6
+        and player.position.y == 5
     )
 
 
@@ -55,6 +55,6 @@ def test_player_circular_movement(world, player):
     while blt.has_input():
         world.make_iteration()
     assert (
-        player.position.x == 0
-        and player.position.y == 0
+        player.position.x == 5
+        and player.position.y == 5
     )

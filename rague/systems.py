@@ -4,6 +4,7 @@ which actually changes state of the world.
 from abc import ABC, abstractmethod, abstractproperty
 
 from rague.config import blt
+from rague.config import SCREEN_CENTER_COORDINATES
 
 
 class System(ABC):
@@ -117,6 +118,12 @@ class Renderer(System):
             entity.position.x, 
             entity.position.y,
             entity.visual.symbol
+        )
+
+    def world_to_local_coords(self, x, y):
+        return (
+            SCREEN_CENTER_COORDINATES[0] + (x - player.position.x),
+            SCREEN_CENTER_COORDINATES[1] + (y - player.position.y)
         )
 
     def evaluate(self):

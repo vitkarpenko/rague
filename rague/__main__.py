@@ -10,8 +10,8 @@ from rague.world import World
 
 # Some preparation.
 player = Player(Position(4, 6))
-map_ = Map()
-world = World(map_)
+map_ = Map('data/maps/test.map')
+world = World(map_, player)
 world.entities.add(player)
 world.systems['Renderer'].evaluate()
 
