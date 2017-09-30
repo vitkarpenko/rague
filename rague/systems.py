@@ -80,8 +80,11 @@ class Movement(System):
     def move(self, entity):
         """Actually changes entity coordinates.
         """
-        entity.position.x += entity.velocity.x
-        entity.position.y += entity.velocity.y
+        new_x = entity.position.x + entity.velocity.x
+        new_y = entity.position.y + entity.velocity.y
+        if self.world.map_[new_x, new_y].passable:
+            entity.position.x += entity.velocity.x
+            entity.position.y += entity.velocity.y
 
     def evaluate(self):
         for entity in self.affected_entities:

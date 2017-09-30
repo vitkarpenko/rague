@@ -44,7 +44,3 @@ class Map:
 
     def __iter__(self):
         return iter(self.tiles)
-
-    def passable(self, position):
-        x, y = position
-        return self[x, y].passable
