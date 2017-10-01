@@ -7,11 +7,11 @@ from rague.systems import System
 
 class World:
     """
-    self.map_: instance of a Map class.
+    self.dungeon: instance of a Map class.
     self.entities: set of all entities in the world.
     self.messages: dict used by systems to exchange messages.
     """
-    def __init__(self, map_, player):
+    def __init__(self, dungeon, player):
         self.entities = set()
         self.messages = dict()
         # Instantiating all systems.
@@ -24,7 +24,7 @@ class World:
             'Movement',
             'Renderer'
         ]
-        self.map_ = map_
+        self.dungeon = dungeon
         self.player = player
 
     def make_iteration(self):

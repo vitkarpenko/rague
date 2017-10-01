@@ -83,7 +83,7 @@ class Movement(System):
         """
         new_x = entity.position.x + entity.velocity.x
         new_y = entity.position.y + entity.velocity.y
-        if self.world.map_[new_x, new_y].passable:
+        if self.world.dungeon[new_x, new_y].passable:
             entity.position.x += entity.velocity.x
             entity.position.y += entity.velocity.y
 
@@ -104,9 +104,9 @@ class Renderer(System):
         return {'visual'}
 
     def draw_map(self, x, y):
-        tile = self.world.map_[x, y]
-        x, y = self.world_to_local_coords(x, y)
+        tile = self.world.dungeon[x, y]
         blt.color(tile.color)
+        x, y = self.world_to_local_coords(x, y)
         blt.put(
             x, y,
             tile.symbol
@@ -131,7 +131,7 @@ class Renderer(System):
 
     def evaluate(self):
         blt.clear()
-        for x, y in self.world.map_:
+        for x, y in self.world.dungeon:
             self.draw_map(x, y)
         for entity in self.affected_entities:
             self.draw_entity(entity)

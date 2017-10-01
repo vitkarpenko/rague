@@ -9,9 +9,12 @@ from rague.world import World
 
 
 # Some preparation.
-player = Player(Position(4, 6))
-map_ = Map('data/maps/test.map')
-world = World(map_, player)
+dungeon = Map()
+player_x, player_y = dungeon.drop_player()
+player = Player(
+    Position(player_x, player_y)
+)
+world = World(dungeon, player)
 world.entities.add(player)
 world.systems['Renderer'].evaluate()
 
