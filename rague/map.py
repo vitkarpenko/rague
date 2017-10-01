@@ -30,7 +30,7 @@ class Map:
 
     def __init__(self, filepath=None):
         self.tiles = dict()
-        self.generator = MapGenerator(size=(100, 200))
+        self.generator = MapGenerator(size=(100, 100))
         if not filepath:
             self.generate_map()
         else:
@@ -73,11 +73,10 @@ class Map:
         room = random.choice(tuple(self.generator.rooms))
         while True:
             x, y = random.choice(room.tiles)
-            if any(coord in room.borders for coord in (x, y)):
+            if x in room.borders[0] or y in room.borders[1]:
                 continue
             else:
                 return x, y
-
 
 class MapGenerator:
     """Generates self.tiles for Map."""
@@ -88,9 +87,10 @@ class MapGenerator:
         self.rooms = set()
 
     def generate(self):
-        for _ in range(300):
+        for _ in range(1000):
             self.try_add_room()
         for room in self.rooms:
+            print(room)
             self.carve_room(room)
         return self.dungeon
 
@@ -106,7 +106,7 @@ class MapGenerator:
                 or room1.y + room1.height < room2.y
             )
         x, y = random.randrange(self.cols), random.randrange(self.rows)
-        width, height = floor(random.gauss(20, 6)), floor(random.gauss(20, 6))
+        width, height = floor(random.gauss(13, 2)), floor(random.gauss(13, 2))
         room = Room(x, y, width, height)
         if not self.rooms or all(
             rooms_not_overlap(room, existing_room)
@@ -116,7 +116,7 @@ class MapGenerator:
     def carve_room(self, room):
         """Actually creates walls and floor for a room."""
         for x, y in room.tiles:
-            if x in room.borders or y in room.borders:
+            if x in room.borders[0] or y in room.borders[1]:
                 self.dungeon[(x, y)] = WALL
             else:
                 self.dungeon[(x, y)] = FLOOR
@@ -134,8 +134,13 @@ class Room:
             for y in range(self.y, self.y + self.height)
         ]
         self.borders = (
-            self.x,
-            self.y,
-            self.x + self.width - 1,
-            self.y + self.height - 1
+            (self.x, self.x + self.width - 1),
+            (self.y, self.y + self.height - 1)
+        )
+
+    def __repr__(self):
+        return "Room x={} y={} width={} height={} borders={}".format(
+            self.x, self.y,
+            self.width, self.height,
+            self.borders
         )

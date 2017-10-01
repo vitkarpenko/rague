@@ -135,12 +135,8 @@ class Renderer(System):
             x, y,
             entity.visual.symbol
         )
-
-    def world_to_local_coords(self, x, y):
-        return (
-            int(SCREEN_CENTER_COORDINATES[0] + (x - self.world.player.position.x)),
-            int(SCREEN_CENTER_COORDINATES[1] + (y - self.world.player.position.y))
-        )
+        if entity == self.world.player:
+            print('Player coords: {}, {}'.format(entity.position.x, entity.position.y))
 
     def evaluate(self):
         blt.clear()
