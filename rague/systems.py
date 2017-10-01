@@ -4,7 +4,11 @@ which actually changes state of the world.
 from abc import ABC, abstractmethod, abstractproperty
 
 from rague.config import blt
-from rague.config import SCREEN_CENTER_COORDINATES
+from rague.config import (
+    SCREEN_CENTER_COORDINATES,
+    SCREEN_WIDTH,
+    SCREEN_HEIGHT
+)
 
 
 class System(ABC):
@@ -103,21 +107,30 @@ class Renderer(System):
     def requested_components(self):
         return {'visual'}
 
-    def draw_map(self, x, y):
+    def draw_map(self, x, y, x_shift, y_shift):
+        """Coodrinates are shifted for centering camera on player."""
         tile = self.world.dungeon[x, y]
+        x, y = (
+            x + x_shift,
+            y + y_shift
+        )
+        if x > SCREEN_WIDTH or y > SCREEN_WIDTH:
+            return
         blt.color(tile.color)
-        x, y = self.world_to_local_coords(x, y)
         blt.put(
             x, y,
             tile.symbol
         )
 
-    def draw_entity(self, entity):
-        blt.color(entity.visual.color)
-        x, y = self.world_to_local_coords(
-            entity.position.x,
-            entity.position.y
+    def draw_entity(self, entity, x_shift, y_shift):
+        """Coodrinates are shifted for centering camera on player."""
+        x, y = (
+            entity.position.x + x_shift,
+            entity.position.y + y_shift
         )
+        if x > SCREEN_WIDTH or y > SCREEN_WIDTH:
+            return
+        blt.color(entity.visual.color)
         blt.put(
             x, y,
             entity.visual.symbol
@@ -131,8 +144,12 @@ class Renderer(System):
 
     def evaluate(self):
         blt.clear()
+        x_shift, y_shift = (
+            int(SCREEN_CENTER_COORDINATES[0] - self.world.player.position.x),
+            int(SCREEN_CENTER_COORDINATES[1] - self.world.player.position.y)
+        )
         for x, y in self.world.dungeon:
-            self.draw_map(x, y)
+            self.draw_map(x, y, x_shift, y_shift)
         for entity in self.affected_entities:
-            self.draw_entity(entity)
+            self.draw_entity(entity, x_shift, y_shift)
         blt.refresh()
