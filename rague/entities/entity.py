@@ -7,6 +7,7 @@ from copy import deepcopy
 from rague.components import Component
 from rague.utils import to_snake_case
 
+
 class EntityMeta(type):
     """Every entity should declare a set of "components" instances
     which are used as a default values for instantiation.

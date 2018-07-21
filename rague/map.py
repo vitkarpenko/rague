@@ -78,6 +78,7 @@ class Map:
             else:
                 return x, y
 
+
 class MapGenerator:
     """Generates self.tiles for Map."""
     def __init__(self, size):
@@ -120,6 +121,7 @@ class MapGenerator:
                 self.dungeon[(x, y)] = WALL
             else:
                 self.dungeon[(x, y)] = FLOOR
+
 
 class Room:
     """Represents single room in a dungeon."""

@@ -1,7 +1,7 @@
 """This module implements various systems
 which actually changes state of the world.
 """
-from abc import ABC, abstractmethod, abstractproperty
+from abc import ABC, abstractmethod
 
 from rague.config import blt
 from rague.config import (
@@ -24,7 +24,8 @@ class System(ABC):
         set of world entities.
         """
 
-    @abstractproperty
+    @property
+    @abstractmethod
     def requested_components(self):
         """Returns set of set of component classes which
         entity must have to be ruled by this system.

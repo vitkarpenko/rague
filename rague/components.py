@@ -28,6 +28,7 @@ class PlayerControlled(Component):
     def __init__(self):
         pass
 
+
 class Visual(Component):
     """Shows how entity should be drawn on screen."""
     def __init__(self, symbol, color=0xFFAAAAAA):
