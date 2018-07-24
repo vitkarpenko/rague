@@ -124,7 +124,7 @@ class Renderer(System):
         )
 
     def draw_entity(self, entity, x_shift, y_shift):
-        """Coodrinates are shifted for centering camera on player."""
+        """Coodrinates are shifted  for centering camera on player."""
         x, y = (
             entity.position.x + x_shift,
             entity.position.y + y_shift
