@@ -1,7 +1,7 @@
 """This module contains main loop.
 """
 
-from rague.config import blt
+
 from rague.entities import *
 from rague.components import *
 from rague.map import Map

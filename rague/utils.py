@@ -7,4 +7,3 @@ def to_snake_case(string):
     """Translates CamelCase to snake_case."""
     s1 = first_cap_re.sub(r'\1_\2', string)
     return all_cap_re.sub(r'\1_\2', s1).lower()
-

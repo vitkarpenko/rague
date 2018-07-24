@@ -2,9 +2,11 @@
 a game world without entities.
 """
 from collections import namedtuple
+from itertools import product
 from math import floor
 from pathlib import Path
 import random
+import sys
 
 
 Tile = namedtuple(
@@ -91,8 +93,8 @@ class MapGenerator:
         for _ in range(1000):
             self.try_add_room()
         for room in self.rooms:
-            print(room)
             self.carve_room(room)
+        self.carve_maze()
         return self.dungeon
 
     def try_add_room(self):
@@ -122,9 +124,17 @@ class MapGenerator:
             else:
                 self.dungeon[(x, y)] = FLOOR
 
+    def carve_maze(self):
+        maze = Maze(self.rows, self.cols)
+        for (x, y), tile in maze.generate().items():
+            if tile == FLOOR:
+                self.dungeon[(x, y)] = FLOOR
+            if tile == WALL and self.dungeon.get((x, y)) != FLOOR:
+                self.dungeon[(x, y)] = WALL
+
 
 class Room:
-    """Represents single room in a dungeon."""
+    """Represents a single room in a dungeon."""
     def __init__(self, x, y, width, height):
         self.x = x
         self.y = y
@@ -146,3 +156,54 @@ class Room:
             self.width, self.height,
             self.borders
         )
+
+
+class Maze:
+    """Generates a maze using recursive backtracking algorithm."""
+    def __init__(self, width: int, length: int):
+        self.width = width
+        self.length = length
+        self.maze = {(x, y): WALL for x, y in product(range(self.length), range(self.width))}
+        self.visited = set()
+        sys.setrecursionlimit(self.width * self.length)
+
+    def __repr__(self):
+        return f"Maze carved={{{', '.join(str(cell) for cell in self.carved)}}}"
+
+    @property
+    def carved(self):
+        return [(x, y) for x, y in self.maze if self.maze[(x, y)] == FLOOR]
+
+    def generate(self):
+        self.carve_maze_from(1, 1)
+        for x, y in self.carved:
+            if random.randint(1, 100) >= 95:
+                for x, y in self.adjacent_cells(x, y):
+                    self.maze[(x, y)] = FLOOR
+        return self.maze
+
+    def adjacent_cells(self, x, y):
+        return (
+            (x-1, y+1), (x, y+1), (x+1, y+1),
+            (x-1, y),             (x+1, y),
+            (x-1, y-1), (x, y-1), (x+1, y-1)
+        )
+
+    def _cell_is_valid(self, x, y):
+        return (
+            (x, y) not in self.visited
+            and 0 < x < self.width
+            and 0 < y < self.length
+            and sum(self.maze.get((x, y)) == FLOOR for x, y in self.adjacent_cells(x, y)) <= 2
+        )
+
+    def carve_maze_from(self, x, y):
+        self.maze[(x, y)] = FLOOR
+        self.visited.add((x, y))
+        directions = [(1, 0), (0, 1), (-1, 0), (0, -1)]
+        random.shuffle(directions)
+        for dx, dy in directions:
+            nx, ny = x + dx, y + dy
+            valid = self._cell_is_valid(nx, ny)
+            if valid:
+                self.carve_maze_from(nx, ny)
