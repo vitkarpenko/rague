@@ -168,7 +168,7 @@ class Maze:
         sys.setrecursionlimit(self.width * self.length)
 
     def __repr__(self):
-        return f"Maze carved={{{', '.join(str(tile) for tile in self.carved)}}}"
+        return f"Maze carved={{{', '.join(str(cell) for cell in self.carved)}}}"
 
     @property
     def carved(self):
@@ -176,6 +176,10 @@ class Maze:
 
     def generate(self):
         self.carve_maze_from(1, 1)
+        for x, y in self.carved:
+            if random.randint(1, 100) >= 95:
+                for x, y in self.adjacent_cells(x, y):
+                    self.maze[(x, y)] = FLOOR
         return self.maze
 
     def adjacent_cells(self, x, y):
