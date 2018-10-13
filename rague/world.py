@@ -5,6 +5,12 @@ World also used by systems as a communicator.
 from rague.systems import System
 
 
+class Blackboard:
+    """ Blackboard is just a place to exchange data between systems. """
+
+    pass
+
+
 class World:
     """
     self.dungeon: instance of a Map class.
@@ -16,8 +22,10 @@ class World:
         self.entities = set()
         self.messages = dict()
         # Instantiating all systems.
+        blackboard = Blackboard()
         self.systems = {
-            system.__name__: system(self) for system in System.__subclasses__()
+            system.__name__: system(self, blackboard)
+            for system in System.__subclasses__()
         }
         self.systems_evaluation_order = ['PlayerControl', 'Movement', 'Renderer']
         self.dungeon = dungeon

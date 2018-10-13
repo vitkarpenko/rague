@@ -3,8 +3,7 @@ which actually changes state of the world.
 """
 from abc import ABC, abstractmethod
 
-from rague.config import (SCREEN_CENTER_COORDINATES, SCREEN_HEIGHT,
-                          SCREEN_WIDTH, blt)
+from rague.config import SCREEN_CENTER_COORDINATES, SCREEN_HEIGHT, SCREEN_WIDTH, blt
 
 
 class System(ABC):
@@ -12,8 +11,9 @@ class System(ABC):
     turn and does some action with them.
     """
 
-    def __init__(self, world):
+    def __init__(self, world, blackboard):
         self.world = world
+        self.blackboard = blackboard
 
     @abstractmethod
     def evaluate(self):
@@ -42,8 +42,8 @@ class System(ABC):
 class PlayerControl(System):
     """Controls player character."""
 
-    def __init__(self, world):
-        super().__init__(world)
+    def __init__(self, world, blackboard):
+        super().__init__(world, blackboard)
 
     @property
     def requested_components(self):
@@ -76,8 +76,8 @@ class PlayerControl(System):
 class Movement(System):
     """Controls changing entitie's coordinates."""
 
-    def __init__(self, world):
-        super().__init__(world)
+    def __init__(self, world, blackboard):
+        super().__init__(world, blackboard)
 
     @property
     def requested_components(self):
@@ -102,8 +102,8 @@ class Movement(System):
 class Renderer(System):
     """Draws on screen a map and entities."""
 
-    def __init__(self, world):
-        super().__init__(world)
+    def __init__(self, world, blackboard):
+        super().__init__(world, blackboard)
 
     @property
     def requested_components(self):

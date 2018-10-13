@@ -2,7 +2,8 @@
 """
 
 import sys
-from pathlib import Path
+
+sys.path.append(".")
 
 import pytest
 
@@ -10,11 +11,6 @@ from rague.components import *
 from rague.entities import *
 from rague.map import Map
 from rague.world import World
-
-sys.path.append(str(Path('../rague').resolve()))
-print(Path('../rague').resolve())
-
-
 
 
 @pytest.fixture
