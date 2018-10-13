@@ -11,19 +11,15 @@ class World:
     self.entities: set of all entities in the world.
     self.messages: dict used by systems to exchange messages.
     """
+
     def __init__(self, dungeon, player):
         self.entities = set()
         self.messages = dict()
         # Instantiating all systems.
-        self.systems = ({
-            system.__name__: system(self)
-            for system in System.__subclasses__()
-        })
-        self.systems_evaluation_order = [
-            'PlayerControl',
-            'Movement',
-            'Renderer'
-        ]
+        self.systems = {
+            system.__name__: system(self) for system in System.__subclasses__()
+        }
+        self.systems_evaluation_order = ['PlayerControl', 'Movement', 'Renderer']
         self.dungeon = dungeon
         self.player = player
 

@@ -1,5 +1,6 @@
-from .entity import Entity
 from rague.components import *
+
+from .entity import Entity
 
 
 class Player(Entity):
@@ -7,5 +8,5 @@ class Player(Entity):
         Position(),
         Velocity(),
         PlayerControlled(),
-        Visual(0xE100+1, color=0xFFB0E0E6)
+        Visual(0xE100 + 1, color=0xFFB0E0E6),
     }

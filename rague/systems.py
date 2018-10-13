@@ -3,18 +3,15 @@ which actually changes state of the world.
 """
 from abc import ABC, abstractmethod
 
-from rague.config import blt
-from rague.config import (
-    SCREEN_CENTER_COORDINATES,
-    SCREEN_WIDTH,
-    SCREEN_HEIGHT
-)
+from rague.config import (SCREEN_CENTER_COORDINATES, SCREEN_HEIGHT,
+                          SCREEN_WIDTH, blt)
 
 
 class System(ABC):
     """System iterates through entities every
     turn and does some action with them.
     """
+
     def __init__(self, world):
         self.world = world
 
@@ -36,13 +33,15 @@ class System(ABC):
         return {
             entity
             for entity in self.world.entities
-            if all(requested in entity.__dict__
-                   for requested in self.requested_components)
+            if all(
+                requested in entity.__dict__ for requested in self.requested_components
+            )
         }
 
 
 class PlayerControl(System):
     """Controls player character."""
+
     def __init__(self, world):
         super().__init__(world)
 
@@ -76,6 +75,7 @@ class PlayerControl(System):
 
 class Movement(System):
     """Controls changing entitie's coordinates."""
+
     def __init__(self, world):
         super().__init__(world)
 
@@ -101,6 +101,7 @@ class Movement(System):
 
 class Renderer(System):
     """Draws on screen a map and entities."""
+
     def __init__(self, world):
         super().__init__(world)
 
@@ -111,31 +112,19 @@ class Renderer(System):
     def draw_map(self, x, y, x_shift, y_shift):
         """Coodrinates are shifted for centering camera on player."""
         tile = self.world.dungeon[x, y]
-        x, y = (
-            x + x_shift,
-            y + y_shift
-        )
+        x, y = (x + x_shift, y + y_shift)
         if x > SCREEN_WIDTH or y > SCREEN_WIDTH:
             return
         blt.color(tile.color)
-        blt.put(
-            x, y,
-            tile.symbol
-        )
+        blt.put(x, y, tile.symbol)
 
     def draw_entity(self, entity, x_shift, y_shift):
         """Coodrinates are shifted  for centering camera on player."""
-        x, y = (
-            entity.position.x + x_shift,
-            entity.position.y + y_shift
-        )
+        x, y = (entity.position.x + x_shift, entity.position.y + y_shift)
         if x > SCREEN_WIDTH or y > SCREEN_WIDTH:
             return
         blt.color(entity.visual.color)
-        blt.put(
-            x, y,
-            entity.visual.symbol
-        )
+        blt.put(x, y, entity.visual.symbol)
         if entity == self.world.player:
             print('Player coords: {}, {}'.format(entity.position.x, entity.position.y))
 
@@ -143,7 +132,7 @@ class Renderer(System):
         blt.clear()
         x_shift, y_shift = (
             int(SCREEN_CENTER_COORDINATES[0] - self.world.player.position.x),
-            int(SCREEN_CENTER_COORDINATES[1] - self.world.player.position.y)
+            int(SCREEN_CENTER_COORDINATES[1] - self.world.player.position.y),
         )
         for x, y in self.world.dungeon:
             self.draw_map(x, y, x_shift, y_shift)

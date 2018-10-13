@@ -1,24 +1,18 @@
 """This module provides Map class which represent
 a game world without entities.
 """
+import random
+import sys
 from collections import namedtuple
 from itertools import product
 from math import floor
 from pathlib import Path
-import random
-import sys
+
+Tile = namedtuple('Tile', ['symbol', 'color', 'passable'])
 
 
-Tile = namedtuple(
-    'Tile',
-    ['symbol',
-     'color',
-     'passable']
-)
-
-
-FLOOR = Tile(0xE100+(11*16+2), 0x22C3B091, True)
-WALL = Tile(0xE100+(13*16+11), 0xBBFFFACD, False)
+FLOOR = Tile(0xE100 + (11 * 16 + 2), 0x22C3B091, True)
+WALL = Tile(0xE100 + (13 * 16 + 11), 0xBBFFFACD, False)
 NOTHING = Tile(0xE100, 0x00000000, False)
 
 
@@ -55,14 +49,17 @@ class Map:
 
     def load_from_file(self, filepath):
         """Loads map from file."""
+
         def set_tile(x, y, symbol):
             if symbol == '.':
                 self[x, y] = FLOOR
             elif symbol == '#':
                 self[x, y] = WALL
             else:
-                raise ValueError('Incorrect value {} '
-                                 'in mapfile {}!'.format(symbol, filepath))
+                raise ValueError(
+                    'Incorrect value {} ' 'in mapfile {}!'.format(symbol, filepath)
+                )
+
         mapfile = Path(__file__).parent / filepath
         with mapfile.open() as data:
             for index_y, line in enumerate(data):
@@ -83,6 +80,7 @@ class Map:
 
 class MapGenerator:
     """Generates self.tiles for Map."""
+
     def __init__(self, size):
         self.dungeon = dict()
         self.rows, self.cols = size
@@ -101,6 +99,7 @@ class MapGenerator:
         """Tries to add one none-overlapping room to dungeon.
         If fails, does nothing.
         """
+
         def rooms_not_overlap(room1, room2):
             return (
                 room1.x > room2.x + room2.width
@@ -108,13 +107,14 @@ class MapGenerator:
                 or room1.y > room2.y + room2.height
                 or room1.y + room1.height < room2.y
             )
+
         x, y = random.randrange(self.cols), random.randrange(self.rows)
         width, height = floor(random.gauss(13, 2)), floor(random.gauss(13, 2))
         room = Room(x, y, width, height)
         if not self.rooms or all(
-            rooms_not_overlap(room, existing_room)
-            for existing_room in self.rooms
-            ): self.rooms.add(room)
+            rooms_not_overlap(room, existing_room) for existing_room in self.rooms
+        ):
+            self.rooms.add(room)
 
     def carve_room(self, room):
         """Actually creates walls and floor for a room."""
@@ -135,6 +135,7 @@ class MapGenerator:
 
 class Room:
     """Represents a single room in a dungeon."""
+
     def __init__(self, x, y, width, height):
         self.x = x
         self.y = y
@@ -147,23 +148,24 @@ class Room:
         ]
         self.borders = (
             (self.x, self.x + self.width - 1),
-            (self.y, self.y + self.height - 1)
+            (self.y, self.y + self.height - 1),
         )
 
     def __repr__(self):
         return "Room x={} y={} width={} height={} borders={}".format(
-            self.x, self.y,
-            self.width, self.height,
-            self.borders
+            self.x, self.y, self.width, self.height, self.borders
         )
 
 
 class Maze:
     """Generates a maze using recursive backtracking algorithm."""
+
     def __init__(self, width: int, length: int):
         self.width = width
         self.length = length
-        self.maze = {(x, y): WALL for x, y in product(range(self.length), range(self.width))}
+        self.maze = {
+            (x, y): WALL for x, y in product(range(self.length), range(self.width))
+        }
         self.visited = set()
         sys.setrecursionlimit(self.width * self.length)
 
@@ -184,9 +186,14 @@ class Maze:
 
     def adjacent_cells(self, x, y):
         return (
-            (x-1, y+1), (x, y+1), (x+1, y+1),
-            (x-1, y),             (x+1, y),
-            (x-1, y-1), (x, y-1), (x+1, y-1)
+            (x - 1, y + 1),
+            (x, y + 1),
+            (x + 1, y + 1),
+            (x - 1, y),
+            (x + 1, y),
+            (x - 1, y - 1),
+            (x, y - 1),
+            (x + 1, y - 1),
         )
 
     def _cell_is_valid(self, x, y):
@@ -194,7 +201,10 @@ class Maze:
             (x, y) not in self.visited
             and 0 < x < self.width
             and 0 < y < self.length
-            and sum(self.maze.get((x, y)) == FLOOR for x, y in self.adjacent_cells(x, y)) <= 2
+            and sum(
+                self.maze.get((x, y)) == FLOOR for x, y in self.adjacent_cells(x, y)
+            )
+            <= 2
         )
 
     def carve_maze_from(self, x, y):

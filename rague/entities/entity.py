@@ -14,13 +14,15 @@ class EntityMeta(type):
     This metaclass turns this set into a dictionary
     for convenience.
     """
+
     def __new__(mcs, name, bases, attrs):
         if 'components' not in attrs:
-            raise AttributeError('Entity subclasses should declare a set of '
-                                 'Components called "components".')
+            raise AttributeError(
+                'Entity subclasses should declare a set of '
+                'Components called "components".'
+            )
         components_dict = {
-            component.__class__.__name__: component
-            for component in attrs['components']
+            component.__class__.__name__: component for component in attrs['components']
         }
         attrs['components'] = components_dict
         clsobj = super().__new__(mcs, name, bases, attrs)
