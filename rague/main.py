@@ -1,5 +1,8 @@
 """This module contains main loop.
 """
+import sys
+
+sys.path.append("..")
 
 
 from rague.components import *
