@@ -25,8 +25,7 @@ class EntityMeta(type):
             component.__class__.__name__: component for component in attrs['components']
         }
         attrs['components'] = components_dict
-        clsobj = super().__new__(mcs, name, bases, attrs)
-        return clsobj
+        return super().__new__(mcs, name, bases, attrs)
 
 
 class Entity(metaclass=EntityMeta):

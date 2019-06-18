@@ -3,7 +3,7 @@ which actually changes state of the world.
 """
 from abc import ABC, abstractmethod
 
-from rague.config import SCREEN_CENTER_COORDINATES, SCREEN_HEIGHT, SCREEN_WIDTH, blt
+from rague.config import SCREEN_CENTER_COORDINATES, SCREEN_WIDTH, blt
 
 
 class System(ABC):

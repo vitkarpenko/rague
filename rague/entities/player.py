@@ -1,4 +1,4 @@
-from rague.components import *
+from rague.components import PlayerControlled, Position, Velocity, Visual
 
 from .entity import Entity
 

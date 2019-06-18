@@ -1,4 +1,4 @@
-from rague.components import *
+from rague.components import Position, Velocity
 
 from .entity import Entity
 
