@@ -1,12 +1,8 @@
 """This module contains main loop.
 """
-import sys
 
-sys.path.append(".")
-
-
-from rague.components import *
-from rague.entities import *
+from rague.components import Position
+from rague.entities import Player
 from rague.map import Map
 from rague.world import World
 

@@ -1,14 +1,10 @@
 """ Configuration for testing.
 """
 
-import sys
-
-sys.path.append(".")
-
 import pytest
 
-from rague.components import *
-from rague.entities import *
+from rague.components import Position
+from rague.entities import Dummy, Player
 from rague.map import Map
 from rague.world import World
 

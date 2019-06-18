@@ -1,0 +1,5 @@
+pytest
+pyautogui
+python-xlib
+psutil
+tqdm
