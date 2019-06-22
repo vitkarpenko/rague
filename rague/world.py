@@ -6,7 +6,7 @@ from rague.systems import System
 
 
 class Blackboard:
-    """ Blackboard is just a place to exchange data between systems. """
+    """ Blackboard is a place to exchange data between systems. """
 
     pass
 
