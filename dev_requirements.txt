@@ -5,3 +5,4 @@ psutil
 tqdm
 flake8
 black
+isort
