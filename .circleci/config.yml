@@ -1,10 +1,10 @@
  version: 2
  jobs:
-   build:
+   check:
      docker:
        - image: circleci/python:3.7.3
      steps:
        - checkout
        - run: sudo pip install -r requirements.txt
        - run: sudo pip install -r dev_requirements.txt
-       - run: make test
+       - run: make check
