@@ -3,3 +3,5 @@ pyautogui
 python-xlib
 psutil
 tqdm
+flake8
+black
