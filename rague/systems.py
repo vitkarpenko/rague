@@ -67,6 +67,18 @@ class PlayerControl(System):
             player.velocity.y += 1
         elif blt.state(blt.TK_LEFT) or blt.state(blt.TK_H):
             player.velocity.x -= 1
+        elif blt.state(blt.TK_Y):
+            player.velocity.x -= 1
+            player.velocity.y -= 1
+        elif blt.state(blt.TK_U):
+            player.velocity.x += 1
+            player.velocity.y -= 1
+        elif blt.state(blt.TK_B):
+            player.velocity.x -= 1
+            player.velocity.y += 1
+        elif blt.state(blt.TK_N):
+            player.velocity.x += 1
+            player.velocity.y += 1
         else:
             # KeyError is handled in World
             # to ignore incorrect keypresses.

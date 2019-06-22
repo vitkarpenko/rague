@@ -9,3 +9,6 @@ check:
 	flake8
 	isort --check --diff
 	black . --check --diff
+
+play:
+	python main.py
