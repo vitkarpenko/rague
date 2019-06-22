@@ -2,7 +2,9 @@
  jobs:
    build:
      docker:
-       - image: circleci/ruby:2.4.1
+       - image: circleci/python:3.7.3
      steps:
        - checkout
-       - run: echo "A first hello"
+       - run: pip install -r requirements.txt
+       - run: pip install -r dev_requirements.txt
+       - run: make test
